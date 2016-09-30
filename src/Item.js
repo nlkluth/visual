@@ -1,5 +1,4 @@
 import React from 'react';
-import { DragSource, DropTarget } from 'react-dnd';
 
 const styles = {
   border: '1px dashed gray',
@@ -11,6 +10,7 @@ class Item extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
+    this.handleDoubeClick = this.handleDoubeClick.bind(this);
     this.updateItem = this.updateItem.bind(this);
     this.state = {
       type: this.props.type || ''
@@ -28,18 +28,22 @@ class Item extends React.Component {
     });
   }
 
+  handleDoubeClick(event) {
+    event.stopPropagation();
+
+    this.setState({
+      editing: !this.state.editing
+    });
+  }
+
   render() {
     return (
       <div
         fill="transparent"
         stroke="black"
+        onDoubleClick={this.handleDoubeClick}
         strokeWidth="2"
-        style={{
-          ...styles,
-          opacity: this.props.isDragging ? 0.2 : 1,
-          left: this.props.left,
-          top: this.props.top,
-        }}
+        style={styles}
       >
         {this.state.editing
           ? <form onSubmit={this.updateItem}>

@@ -54,7 +54,6 @@ function dropCollect(connect, monitor) {
 class ItemRenderer extends React.Component {
   constructor(props) {
     super(props);
-    this.handleDoubeClick = this.handleDoubeClick.bind(this);
     this.state = {
       editing: false
     };
@@ -64,23 +63,23 @@ class ItemRenderer extends React.Component {
     this.props.drawLine(fromId, toId);
   }
 
-  handleDoubeClick(event) {
-    event.stopPropagation();
-
-    this.setState({
-      editing: !this.state.editing
-    });
-  }
-
   render() {
     const { id, left, top, type } = this.props;
     const Rendered = renderedList[type] || renderedList.item;
 
     return this.props.connectDragSource(this.props.connectDropTarget(
-      <div style={styles} onDoubleClick={this.handleDoubeClick}>
+      <div
+        style={{
+          ...styles,
+          opacity: this.props.isDragging ? 0.2 : 1,
+          left: this.props.left,
+          top: this.props.top
+        }}
+      >
         <Rendered
           id={id}
           left={left}
+          sound={this.props.sound}
           top={top}
           type={type}
           updateItem={this.props.updateItem}

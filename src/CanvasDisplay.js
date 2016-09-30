@@ -59,6 +59,7 @@ class CanvasDisplay extends React.Component {
         top={top}
         key={key}
         type={type}
+        sound={this.props.sound}
         updateItem={this.props.updateItem}
         drawLine={this.props.drawLine}
         drawProgress={this.props.drawProgress}
@@ -78,7 +79,6 @@ class CanvasDisplay extends React.Component {
 
       return (
         <Connection
-          sound={this.props.sound}
           key={this.props.lines[key].id}
           from={{x: fromId.left, y: fromId.top}}
           to={{x: to.left, y: to.top}}
