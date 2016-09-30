@@ -63,6 +63,7 @@ class CanvasDisplay extends React.Component {
         updateItem={this.props.updateItem}
         drawLine={this.props.drawLine}
         drawProgress={this.props.drawProgress}
+        openMenu={this.props.openMenu}
       />
     );
   }
@@ -96,7 +97,11 @@ class CanvasDisplay extends React.Component {
     const { connectDropTarget } = this.props;
 
     return connectDropTarget(
-      <div className="canvas" onDoubleClick={this.handleDoubleClick}>
+      <div
+        className="canvas"
+        onClick={this.props.closeMenu}
+        onDoubleClick={this.handleDoubleClick}
+      >
         {Object.keys(this.props.items).map(this.renderItem)}
         <svg width="100%" height="100%">
           {Object.keys(this.props.lines).length > 1 && this.renderConnections()}

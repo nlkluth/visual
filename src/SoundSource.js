@@ -11,7 +11,9 @@ class SoundSource extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick() {
+  handleClick(event) {
+    event.stopPropagation();
+
     const source = window.context.createOscillator();
     source.frequency.value = 440;
     source.start(window.context.currentTime);

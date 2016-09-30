@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import update from 'react/lib/update';
 import OptionMenu from './OptionMenu';
+import ContextMenu from './ContextMenu';
 import CanvasDisplay from './CanvasDisplay';
 import uuid from 'node-uuid';
 
@@ -13,10 +14,13 @@ class App extends Component {
     this.drawProgress = this.drawProgress.bind(this);
     this.toggleSound = this.toggleSound.bind(this);
     this.updateItem = this.updateItem.bind(this);
+    this.openMenu = this.openMenu.bind(this);
+    this.closeMenu = this.closeMenu.bind(this);
     this.state = {
       items: {},
       lines: {},
-      sound: true
+      sound: true,
+      contextMenu: {}
     };
   }
 
@@ -71,6 +75,16 @@ class App extends Component {
   }
 
   moveItem(id, left, top) {
+    let contextMenu = this.state.contextMenu;
+    if (id === this.state.contextMenu.id) {
+      contextMenu = update(this.state.contextMenu, {
+        $merge: {
+          left: left,
+          top: top
+        }
+      });
+    }
+
     this.setState(update(this.state, {
       items: {
         [id]: {
@@ -79,6 +93,9 @@ class App extends Component {
             top: top
           }
         }
+      },
+      contextMenu: {
+        $set: contextMenu
       }
     }));
   }
@@ -91,6 +108,25 @@ class App extends Component {
         }
       }
     }))
+  }
+
+  closeMenu() {
+    this.setState({
+      contextMenu: {
+        open: false
+      }
+    });
+  }
+
+  openMenu(id) {
+    this.setState({
+      contextMenu: {
+        open: true,
+        id,
+        top: this.state.items[id].top,
+        left: this.state.items[id].left
+      }
+    });
   }
 
   drawProgress(fromTop, fromLeft, toTop, toLeft) {
@@ -118,6 +154,11 @@ class App extends Component {
           drawProgress={this.drawProgress}
           addItem={this.addItem}
           updateItem={this.updateItem}
+          openMenu={this.openMenu}
+          closeMenu={this.closeMenu}
+        />
+        <ContextMenu
+          menu={this.state.contextMenu}
         />
       </div>
     );

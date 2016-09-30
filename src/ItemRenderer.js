@@ -56,6 +56,7 @@ function dropCollect(connect, monitor) {
 class ItemRenderer extends React.Component {
   constructor(props) {
     super(props);
+    this.openMenu = this.openMenu.bind(this);
     this.state = {
       editing: false
     };
@@ -63,6 +64,13 @@ class ItemRenderer extends React.Component {
 
   drawLine(fromId, toId) {
     this.props.drawLine(fromId, toId);
+  }
+
+  openMenu(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.props.openMenu(this.props.id);
   }
 
   render() {
@@ -75,8 +83,9 @@ class ItemRenderer extends React.Component {
           ...styles,
           opacity: this.props.isDragging ? 0.2 : 1,
           left: this.props.left,
-          top: this.props.top
+          top: this.props.top,
         }}
+        onContextMenu={this.openMenu}
       >
         <Rendered
           id={id}
