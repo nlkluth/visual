@@ -3,10 +3,12 @@ import { DragSource, DropTarget } from 'react-dnd';
 import Anchor from './Anchor';
 import Item from './Item';
 import SoundSource from './SoundSource';
+import Frequency from './Frequency';
 
 const renderedList = {
   item: Item,
-  soundsource: SoundSource
+  soundsource: SoundSource,
+  frequency: Frequency
 };
 
 const styles = {
