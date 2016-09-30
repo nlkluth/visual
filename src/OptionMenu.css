@@ -1,0 +1,21 @@
+.option-menu {
+  border-right: 1px solid #ccc;
+  box-shadow: 1px 0 5px -2px #888;
+  width: 50px;
+}
+
+.option-item {
+  text-align: center;
+  padding: 10px;
+  font-size: 1.2em;
+  border-bottom: 1px solid #eee;
+}
+
+.option-item:hover {
+  cursor: pointer;
+  background: #eee;
+}
+
+.option-item.disabled {
+  border-right: 2px solid red;
+}
